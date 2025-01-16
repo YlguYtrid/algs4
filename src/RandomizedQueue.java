@@ -81,12 +81,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
     private void resize(int capacity) {
         Item[] copy = (Item[]) new Object[capacity]; // cannot use @SuppressWarnings("unchecked")
-        int i = 0;
-        for (Item item : items) {
-            if (item != null) {
-                copy[i++] = item;
-            }
-        }
+        System.arraycopy(items, 0, copy, 0, size);
         items = copy;
     }
 

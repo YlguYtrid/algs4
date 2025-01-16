@@ -106,6 +106,17 @@ public class Deque<Item> implements Iterable<Item> {
         start = 0;
     }
 
+    private void resizeDoubleIfFull() {
+        if (size == items.length)
+            resize(2 * items.length);
+    }
+
+    private void resizeHalfIfQuarter() {
+        if (size == items.length / 4 && items.length > INIT_CAPACITY) {
+            resize(items.length / 2);
+        }
+    }
+
     private int realIndex(int index) {
         return (start + index + items.length) % items.length;
     }
@@ -122,8 +133,7 @@ public class Deque<Item> implements Iterable<Item> {
     public void addFirst(Item item) {
         if (item == null)
             throw new IllegalArgumentException("item cannot be null");
-        if (size == items.length)
-            resize(2 * items.length);
+        resizeDoubleIfFull();
         start = realIndex(-1);
         items[start] = item;
         size++;
@@ -133,38 +143,33 @@ public class Deque<Item> implements Iterable<Item> {
     public void addLast(Item item) {
         if (item == null)
             throw new IllegalArgumentException("item cannot be null");
-        if (size == items.length)
-            resize(2 * items.length);
-        int i = stopIndex();
-        items[i] = item;
+        resizeDoubleIfFull();
+        items[stopIndex()] = item;
         size++;
+    }
+
+    private Item remove(int index) {
+        if (isEmpty())
+            throw new NoSuchElementException("Deque is empty");
+        Item item = items[index];
+        items[index] = null;
+        return item;
     }
 
     // remove and return the item from the front
     public Item removeFirst() {
-        if (isEmpty())
-            throw new NoSuchElementException("Deque is empty");
-        Item item = items[start];
-        items[start] = null;
+        Item item = remove(start);
         start = realIndex(1);
         size--;
-        if (size == items.length / 4 && items.length > INIT_CAPACITY) {
-            resize(items.length / 2);
-        }
+        resizeHalfIfQuarter();
         return item;
     }
 
     // remove and return the item from the back
     public Item removeLast() {
-        if (isEmpty())
-            throw new NoSuchElementException("Deque is empty");
-        int i = endIndex();
-        Item item = items[i];
-        items[i] = null;
+        Item item = remove(endIndex());
         size--;
-        if (size == items.length / 4 && items.length > INIT_CAPACITY) {
-            resize(items.length / 2);
-        }
+        resizeHalfIfQuarter();
         return item;
     }
 
