@@ -13,7 +13,7 @@ public class BruteCollinearPoints {
         Point[] pointsSorted = points.clone();
         Arrays.sort(pointsSorted);
         for (int i = 0; i < pointsSorted.length - 1; i++)
-            if (pointsSorted[i].equals(pointsSorted[i+1]))
+            if (pointsSorted[i].equals(pointsSorted[i + 1]))
                 throw new IllegalArgumentException("repeated points");
         if (pointsSorted.length < 4) {
             segments = new LineSegment[0];
@@ -21,13 +21,13 @@ public class BruteCollinearPoints {
         }
         ArrayList<LineSegment> list = new ArrayList<>();
         for (int i = 0; i < pointsSorted.length - 3; i++) {
-            for (int j = i+1; j < pointsSorted.length - 2; j++) {
-                for (int k = j+1; k < pointsSorted.length - 1; k++) {
-                    for (int l = k+1; l < pointsSorted.length; l++) {
+            for (int j = i + 1; j < pointsSorted.length - 2; j++) {
+                for (int k = j + 1; k < pointsSorted.length - 1; k++) {
+                    for (int m = k + 1; m < pointsSorted.length; m++) {
                         Point p = pointsSorted[i];
                         Point q = pointsSorted[j];
                         Point r = pointsSorted[k];
-                        Point s = pointsSorted[l];
+                        Point s = pointsSorted[m];
                         if (p.slopeTo(q) == p.slopeTo(r) && p.slopeTo(q) == p.slopeTo(s))
                             list.add(new LineSegment(p, s));
                     }

@@ -13,7 +13,7 @@ public class FastCollinearPoints {
         Point[] pointsSorted = points.clone();
         Arrays.sort(pointsSorted);
         for (int i = 0; i < pointsSorted.length - 1; i++)
-            if (pointsSorted[i].equals(pointsSorted[i+1]))
+            if (pointsSorted[i].equals(pointsSorted[i + 1]))
                 throw new IllegalArgumentException("repeated points");
         if (pointsSorted.length < 4) {
             segments = new LineSegment[0];
@@ -28,8 +28,8 @@ public class FastCollinearPoints {
                 int j = i + 1;
                 while (j < pointsBySlope.length && pointsBySlope[i].slopeTo(p) == pointsBySlope[j].slopeTo(p))
                     j++;
-                if (j - i >= 3 && p.compareTo(pointsBySlope[i])<0)
-                    list.add(new LineSegment(p, pointsBySlope[j-1]));
+                if (j - i >= 3 && p.compareTo(pointsBySlope[i]) < 0)
+                    list.add(new LineSegment(p, pointsBySlope[j - 1]));
                 i = j;
             }
         }

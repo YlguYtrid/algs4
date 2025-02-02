@@ -11,9 +11,8 @@ public class Percolation {
 
     // creates n-by-n grid, with all sites initially blocked
     public Percolation(int n) {
-        if (n <= 0) {
+        if (n <= 0)
             throw new IllegalArgumentException("Parameter n must be greater than 0.");
-        }
         this.n = n;
         int size = n * n + 2; // add 2 for the virtual top and bottom
         isOpened = new boolean[size];
@@ -34,9 +33,8 @@ public class Percolation {
     }
 
     private void validateSite(int row, int col) {
-        if (!isLegalSite(row, col)) {
+        if (!isLegalSite(row, col))
             throw new IllegalArgumentException("Illegal site: " + row + ", " + col + ".");
-        }
     }
 
     // index of site (row, col) in 1D array
